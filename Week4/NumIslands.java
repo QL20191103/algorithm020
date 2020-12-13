@@ -1,4 +1,5 @@
-学习笔记
+package com.jkdx.practice;
+
 /**
  * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
  *
@@ -53,7 +54,53 @@
  * DFSmarker(grid,i+1,n,j,m);
  *
  */
- 
- 
- 
- 最近要期末考试了，这个星期就总结了这一道题目。。。
+public class NumIslands {
+    public static void main(String[] args) {
+        char[][] grid={{'1','1','0','0','0'},
+                {'1','1','0','0','0'},
+                {'0','0','1','0','0'},
+                {'0','0','0','1','1'}};
+        System.out.println(numIslands(grid));
+    }
+
+    public static int numIslands(char[][] grid) {
+
+        int count = 0,n,m;
+        //行数
+        n = grid.length;
+        if(n==0){
+            return 0;
+        }
+        //列数
+        m = grid[0].length;
+        //System.out.println(n+"==="+m);
+        for (int i = 0;i < n;i++) {
+            for (int j = 0;j < m;j++) {
+                if (grid[i][j] == '1') {
+                    DFSmarker(grid,i,n,j,m);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private static void DFSmarker(char[][] grid, int i, int n, int j, int m) {
+        if (i>=n||i<0||j>=m||j<0||grid[i][j]=='0'){
+            return;
+        }
+        //将该位置的值置位0
+        //System.out.println(grid[i][j]+" ");
+        grid[i][j]='0';
+        //处理该位置的右边；
+        DFSmarker(grid,i,n,j+1,m);
+        //处理该位置的左边
+        DFSmarker(grid,i,n,j-1,m);
+        //处理该位置的上边
+        DFSmarker(grid,i-1,n,j,m);
+        //处理该位置的下边
+        DFSmarker(grid,i+1,n,j,m);
+    }
+
+
+}
